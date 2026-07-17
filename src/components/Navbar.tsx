@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Search, ShoppingBag, Menu, X, User } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Magnetic from "./Magnetic";
 import AuthModal from "./AuthModal";
 import CartSidebar from "./CartSidebar";
 import { useCart, CartStore } from "@/lib/cart";
+import { supabase } from "@/lib/supabase";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -21,9 +22,23 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const pathname = usePathname();
+  const router = useRouter();
   const { items } = useCart();
   const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+    
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -94,8 +109,12 @@ export default function Navbar() {
               </button>
             </Magnetic>
             <Magnetic>
-              <button onClick={() => setAuthOpen(true)}>
+              <button onClick={() => {
+                if (user) router.push("/orders");
+                else setAuthOpen(true);
+              }} className="group relative">
                 <User className="w-5 h-5 hover:text-gold transition-colors" />
+                {user && <span className="absolute w-2 h-2 rounded-full bg-gold top-0 right-0"></span>}
               </button>
             </Magnetic>
             <Magnetic>
@@ -113,8 +132,12 @@ export default function Navbar() {
 
         {/* Mobile Icons Right */}
         <div className="md:hidden flex-1 flex justify-end gap-4">
-          <button onClick={() => setAuthOpen(true)}>
+          <button onClick={() => {
+              if (user) router.push("/orders");
+              else setAuthOpen(true);
+          }} className="relative">
             <User className="w-5 h-5" />
+            {user && <span className="absolute w-2 h-2 rounded-full bg-gold top-0 right-0"></span>}
           </button>
           <button onClick={() => CartStore.setIsOpen(true)} className="relative">
             <ShoppingBag className="w-5 h-5" />

@@ -23,13 +23,16 @@ export default function Checkout() {
       await new Promise(resolve => setTimeout(resolve, 2500)); 
     }
 
+    const { data: { user } } = await supabase.auth.getUser();
+
     // Insert live order into Supabase
     const { error } = await supabase.from('orders').insert([{
-      customer_name: `${formData.firstName} ${formData.lastName}`.trim() || "Guest Customer",
-      customer_email: formData.email || "guest@example.com",
+      customer_name: `${formData.firstName} ${formData.lastName}`.trim() || user?.user_metadata?.full_name || "Guest Customer",
+      customer_email: formData.email || user?.email || "guest@example.com",
       amount: 1000,
       payment_method: method,
-      status: "Pending" // Automatically sets for Admin Dashboard
+      status: "Pending",
+      user_id: user?.id || null
     }]);
 
     setLoading(false);

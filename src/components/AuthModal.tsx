@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -16,21 +17,45 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [fullName, setFullName] = useState("");
   const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    if (isAdmin) {
+    
+    if (isAdmin && !isSignUp) {
       if (email === "admin" && password === "123456") {
         onClose();
         router.push("/admin");
-      } else {
-        setError("Invalid admin credentials. Hint: use admin / 123456");
+        return;
       }
-    } else {
-      onClose();
-      router.push("/shop"); 
+    }
+
+    try {
+      if (isSignUp && !isAdmin) {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { data: { full_name: fullName, role: 'user' } }
+        });
+        if (error) throw error;
+        onClose();
+        router.push("/shop");
+      } else {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        
+        onClose();
+        const { data: profile } = await supabase.from('profiles').select('role').eq('id', data.user.id).single();
+        if (profile?.role === 'admin' || isAdmin) {
+           router.push("/admin");
+        } else {
+           router.push("/orders");
+        }
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to authenticate");
     }
   };
 
@@ -82,7 +107,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
               {!isAdmin && isSignUp && (
                 <div>
                   <label className="text-xs uppercase tracking-widest text-muted-foreground mb-3 block">Full Name</label>
-                  <input type="text" required placeholder="John Doe" className="w-full bg-transparent border-b border-white/20 pb-3 outline-none focus:border-gold transition-colors text-white" />
+                  <input type="text" value={fullName} onChange={e => setFullName(e.target.value)} required placeholder="John Doe" className="w-full bg-transparent border-b border-white/20 pb-3 outline-none focus:border-gold transition-colors text-white" />
                 </div>
               )}
               <div>
