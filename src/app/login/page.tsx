@@ -1,32 +1,27 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
-interface AuthModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
+export default function LoginPage() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [fullName, setFullName] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [processing, setProcessing] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setProcessing(true);
     
     if (isAdmin && !isSignUp) {
       if (email === "admin" && password === "123456") {
-        onClose();
         router.push("/admin");
         return;
       }
@@ -40,48 +35,39 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           options: { data: { full_name: fullName, role: 'user' } }
         });
         if (error) throw error;
-        onClose();
-        router.push("/shop");
+        router.push("/");
       } else {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         
-        onClose();
         const { data: profile } = await supabase.from('profiles').select('role').eq('id', data.user.id).single();
         if (profile?.role === 'admin' || isAdmin) {
            router.push("/admin");
         } else {
-           router.push("/orders");
+           router.push("/");
         }
       }
     } catch (err: any) {
       setError(err.message || "Failed to authenticate");
+    } finally {
+      setProcessing(false);
     }
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[100]"
-          />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-[#0a0a0a] border border-white/10 rounded-2xl p-8 z-[101] shadow-2xl"
-          >
-            <button onClick={onClose} className="absolute top-6 right-6 text-muted-foreground hover:text-white transition-colors">
-              <X className="w-5 h-5" />
-            </button>
+    <main className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden px-6">
+        {/* Background glow effects */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-foreground/10 rounded-full blur-[120px]" />
+        
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full max-w-md bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-10 z-10 shadow-2xl relative"
+        >
+            <h1 className="text-4xl text-center font-heading heading-gold uppercase tracking-widest mb-10">Aura</h1>
             
-            
-            <h2 className="text-3xl font-heading heading-gold mb-2">{isAdmin ? "Admin Access" : (isSignUp ? "Join Aura" : "Sign In")}</h2>
+            <h2 className="text-2xl font-heading text-white mb-2">{isAdmin ? "Admin Access" : (isSignUp ? "Join Aura" : "Sign In")}</h2>
             <p className="text-muted-foreground text-sm tracking-widest uppercase mb-8">
               {isAdmin ? "Manage the empire" : (isSignUp ? "Create your legacy account" : "Enter the world of Aura")}
             </p>
@@ -102,7 +88,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
             </div>
 
             <form onSubmit={handleLogin} className="space-y-6">
-              {error && <p className="text-red-500 text-xs tracking-widest uppercase">{error}</p>}
+              {error && <p className="text-red-500 text-xs tracking-widest uppercase bg-red-950/20 p-3 rounded-md border border-red-900/30">{error}</p>}
               
               {!isAdmin && isSignUp && (
                 <div>
@@ -112,27 +98,25 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
               )}
               <div>
                 <label className="text-xs uppercase tracking-widest text-muted-foreground mb-3 block">Email</label>
-                <input type="text" value={email} onChange={e => setEmail(e.target.value)} required placeholder={isAdmin ? "Enter admin ID" : "Enter your email"} className="w-full bg-transparent border-b border-white/20 pb-3 outline-none focus:border-gold transition-colors text-white" />
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder={isAdmin ? "Enter admin ID" : "Email Address"} className="w-full bg-transparent border-b border-white/20 pb-3 outline-none focus:border-gold transition-colors text-white" />
               </div>
               <div>
                 <label className="text-xs uppercase tracking-widest text-muted-foreground mb-3 block">Password</label>
                 <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="••••••••" className="w-full bg-transparent border-b border-white/20 pb-3 outline-none focus:border-gold transition-colors text-white" />
               </div>
-              <button type="submit" className="w-full bg-gold text-background py-4 rounded-md tracking-widest uppercase text-sm font-medium hover:bg-white transition-colors duration-300 mt-4">
-                {isSignUp && !isAdmin ? "Create Account" : "Enter"}
+              <button type="submit" disabled={processing} className="w-full bg-gold text-background py-4 rounded-md tracking-widest uppercase text-sm font-medium hover:bg-white transition-all duration-300 mt-4 disabled:opacity-50">
+                {processing ? "Authenticating..." : (isSignUp && !isAdmin ? "Create Account" : "Access Collection")}
               </button>
 
               {!isAdmin && (
-                <div className="text-center pt-4 border-t border-white/10">
+                <div className="text-center pt-6 mt-6 border-t border-white/10">
                   <button type="button" onClick={() => setIsSignUp(!isSignUp)} className="text-xs tracking-widest uppercase text-muted-foreground hover:text-gold transition-colors block mx-auto">
                     {isSignUp ? "Already have an account? Sign In" : "New to Aura? Create Account"}
                   </button>
                 </div>
               )}
             </form>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+        </motion.div>
+    </main>
   );
 }

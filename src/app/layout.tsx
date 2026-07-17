@@ -3,6 +3,7 @@ import { Playfair_Display, Cormorant_Garamond, Poppins, Inter } from "next/font/
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
+import AuthWrapper from "@/components/AuthWrapper";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -43,8 +44,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans">
         <SmoothScroll>
-          <CustomCursor />
-          {children}
+          <AuthWrapper>
+            <CustomCursor />
+            {children}
+          </AuthWrapper>
         </SmoothScroll>
       </body>
     </html>
