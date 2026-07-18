@@ -64,7 +64,7 @@ export default function HeroSection() {
           >
             <Image
               src="/images/hero.png"
-              alt="Aura Luxury Perfume"
+              alt="Scenz Luxury Perfume"
               fill
               className="object-contain drop-shadow-[0_20px_50px_rgba(212,175,55,0.4)]"
               priority
@@ -80,7 +80,7 @@ export default function HeroSection() {
           className="flex flex-col items-center"
         >
           <h1 className="text-5xl md:text-8xl lg:text-[10rem] font-heading font-medium tracking-tight heading-gold leading-none pb-4">
-            AURA
+            SCENZ
           </h1>
           <p className="text-lg md:text-2xl text-muted-foreground font-light max-w-2xl mt-4 tracking-widest uppercase">
             The Essence of Eternity

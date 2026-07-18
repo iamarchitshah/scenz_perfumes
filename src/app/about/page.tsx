@@ -17,7 +17,7 @@ export default function About() {
             A Legacy of <br /> Elegance
           </h1>
           <p className="text-muted-foreground leading-relaxed font-light text-lg">
-            Born from a passion for the extraordinary, Aura has redefined the landscape of high-end perfumery. We believe that a fragrance is more than a scent—it is an invisible garment, a signature, and a powerful memory.
+            Born from a passion for the extraordinary, Scenz has redefined the landscape of high-end perfumery. We believe that a fragrance is more than a scent—it is an invisible garment, a signature, and a powerful memory.
           </p>
         </div>
 
@@ -26,7 +26,7 @@ export default function About() {
           <div className="relative w-full h-full rounded-xl overflow-hidden">
             <Image
               src="/images/hero.png" // using hero placeholder
-              alt="Aura Perfume Creation"
+              alt="Scenz Perfume Creation"
               fill
               className="object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-1000"
             />

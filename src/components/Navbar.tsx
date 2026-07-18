@@ -84,7 +84,7 @@ export default function Navbar() {
         {/* Logo */}
         <div className="flex-1 flex justify-center">
           <Link href="/" className="text-3xl md:text-5xl font-heading font-medium tracking-widest uppercase text-center heading-gold">
-            Aura
+            Scenz
           </Link>
         </div>
 

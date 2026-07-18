@@ -65,11 +65,11 @@ export default function LoginPage() {
             animate={{ opacity: 1, y: 0 }}
             className="w-full max-w-md bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-10 z-10 shadow-2xl relative"
         >
-            <h1 className="text-4xl text-center font-heading heading-gold uppercase tracking-widest mb-10">Aura</h1>
+            <h1 className="text-4xl text-center font-heading heading-gold uppercase tracking-widest mb-10">Scenz</h1>
             
-            <h2 className="text-2xl font-heading text-white mb-2">{isAdmin ? "Admin Access" : (isSignUp ? "Join Aura" : "Sign In")}</h2>
+            <h2 className="text-2xl font-heading text-white mb-2">{isAdmin ? "Admin Access" : (isSignUp ? "Join Scenz" : "Sign In")}</h2>
             <p className="text-muted-foreground text-sm tracking-widest uppercase mb-8">
-              {isAdmin ? "Manage the empire" : (isSignUp ? "Create your legacy account" : "Enter the world of Aura")}
+              {isAdmin ? "Manage the empire" : (isSignUp ? "Create your legacy account" : "Enter the world of Scenz")}
             </p>
 
             <div className="flex gap-4 mb-8">
@@ -111,7 +111,7 @@ export default function LoginPage() {
               {!isAdmin && (
                 <div className="text-center pt-6 mt-6 border-t border-white/10">
                   <button type="button" onClick={() => setIsSignUp(!isSignUp)} className="text-xs tracking-widest uppercase text-muted-foreground hover:text-gold transition-colors block mx-auto">
-                    {isSignUp ? "Already have an account? Sign In" : "New to Aura? Create Account"}
+                    {isSignUp ? "Already have an account? Sign In" : "New to Scenz? Create Account"}
                   </button>
                 </div>
               )}

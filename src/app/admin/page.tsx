@@ -52,7 +52,7 @@ export default function AdminDashboard() {
         <aside className="w-64 border-r border-white/10 p-6 flex flex-col justify-between hidden lg:flex">
           <div>
             <div className="mb-12">
-              <h1 className="text-3xl font-heading heading-gold uppercase tracking-widest">Aura</h1>
+              <h1 className="text-3xl font-heading heading-gold uppercase tracking-widest">Scenz</h1>
               <span className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1 block">Command Center</span>
             </div>
 

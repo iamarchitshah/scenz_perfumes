@@ -39,7 +39,7 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
       <div className="min-h-screen bg-background flex flex-col items-center justify-center relative overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold/10 rounded-full blur-[120px]" />
         <div className="w-16 h-16 border-2 border-gold/30 border-t-gold rounded-full animate-spin mb-8" />
-        <h1 className="text-3xl font-heading heading-gold uppercase tracking-widest animate-pulse">Aura</h1>
+        <h1 className="text-3xl font-heading heading-gold uppercase tracking-widest animate-pulse">Scenz</h1>
       </div>
     );
   }

@@ -111,7 +111,7 @@ export default function Checkout() {
               <div className="space-y-6 mb-6">
                 <div className="flex justify-between items-center">
                   <div>
-                    <h4 className="font-heading">Aura Bloom</h4>
+                    <h4 className="font-heading">Scenz Bloom</h4>
                     <p className="text-xs text-muted-foreground uppercase tracking-widest">Qty: 1</p>
                   </div>
                   <span className="text-sm">₹450</span>

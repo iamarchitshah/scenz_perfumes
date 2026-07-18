@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-24">
           <div className="col-span-1 md:col-span-2">
-            <h2 className="text-4xl md:text-6xl font-heading heading-gold mb-6 uppercase tracking-widest">Aura</h2>
+            <h2 className="text-4xl md:text-6xl font-heading heading-gold mb-6 uppercase tracking-widest">Scenz</h2>
             <p className="text-muted-foreground max-w-sm font-light leading-relaxed mb-8">
               The epitome of elegance and seduction. Crafted with the finest ingredients from around the world to leave a lasting impression.
             </p>
@@ -61,7 +61,7 @@ export default function Footer() {
         </div>
         
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground uppercase tracking-widest">
-          <p>&copy; {new Date().getFullYear()} Aura Parfums. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Scenz Parfums. All Rights Reserved.</p>
           <div className="flex gap-6">
             <Link href="#" className="hover:text-foreground transition-colors">Privacy Policy</Link>
             <Link href="#" className="hover:text-foreground transition-colors">Terms of Service</Link>
@@ -71,7 +71,7 @@ export default function Footer() {
       
       {/* Background decoration */}
       <h1 className="absolute -bottom-10 md:-bottom-24 left-1/2 -translate-x-1/2 text-[15vw] font-heading font-bold text-white/[0.02] whitespace-nowrap pointer-events-none select-none">
-        AURAAURA
+        SCENZSCENZ
       </h1>
     </footer>
   );

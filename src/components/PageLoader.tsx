@@ -30,7 +30,7 @@ export default function PageLoader() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="text-4xl md:text-6xl font-heading text-gold tracking-widest uppercase mb-4"
       >
-        Aura
+        Scenz
       </motion.h1>
       <motion.div
         initial={{ width: 0 }}

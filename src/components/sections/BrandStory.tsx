@@ -53,7 +53,7 @@ export default function BrandStory() {
             
             <div className="space-y-6 text-muted-foreground font-light text-lg leading-relaxed">
               <p>
-                Since 1924, Aura has been at the forefront of luxury perfumery, blending tradition with avant-garde innovation. 
+                Since 1924, Scenz has been at the forefront of luxury perfumery, blending tradition with avant-garde innovation. 
                 Our master perfumers travel the globe to source the rarest, most exquisite ingredients.
               </p>
               <p>

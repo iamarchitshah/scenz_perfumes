@@ -28,7 +28,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Aura | Luxury Perfume Collection",
+  title: "Scenz | Luxury Perfume Collection",
   description: "Experience the epitome of elegance with our exclusive luxury perfume collection, crafted with the finest ingredients in the world.",
 };
 

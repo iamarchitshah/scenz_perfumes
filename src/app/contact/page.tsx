@@ -11,7 +11,7 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 pb-32">
         <div className="text-center mb-16">
           <span className="text-gold text-xs tracking-widest uppercase mb-4 block">Concierge</span>
-          <h1 className="text-5xl md:text-7xl font-heading heading-gold mb-6 uppercase tracking-widest">Connect with Aura</h1>
+          <h1 className="text-5xl md:text-7xl font-heading heading-gold mb-6 uppercase tracking-widest">Connect with Scenz</h1>
           <p className="text-muted-foreground max-w-xl mx-auto text-sm tracking-widest uppercase font-light">
             Our luxury concierge team is available to assist you with bespoke requests, orders, and inquiries.
           </p>
@@ -50,7 +50,7 @@ export default function Contact() {
             <div>
               <h4 className="text-gold text-sm tracking-widest uppercase mb-4">Contact Information</h4>
               <p className="text-muted-foreground font-light leading-relaxed">
-                concierge@auraparfums.com<br />
+                concierge@scenzparfums.com<br />
                 +33 (0) 1 23 45 67 89
               </p>
             </div>
