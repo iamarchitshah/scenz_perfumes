@@ -37,7 +37,7 @@ export default function FeaturedCollection() {
             </p>
           </div>
           <Magnetic>
-            <Link href="/product" className="text-sm border-b border-gold text-gold pb-1 tracking-widest uppercase hover:text-white hover:border-white transition-colors">
+            <Link href="/shop" className="text-sm border-b border-gold text-gold pb-1 tracking-widest uppercase hover:text-white hover:border-white transition-colors">
               View All Products
             </Link>
           </Magnetic>

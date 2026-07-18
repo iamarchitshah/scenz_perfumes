@@ -114,7 +114,7 @@ export default function HeroSection() {
             </Link>
           </Magnetic>
           <Magnetic>
-            <Link href="/product" className="px-10 py-4 border border-gold/50 text-gold rounded-full font-medium tracking-widest uppercase text-sm hover:bg-gold/10 transition-colors inline-block">
+            <Link href="/shop" className="px-10 py-4 border border-gold/50 text-gold rounded-full font-medium tracking-widest uppercase text-sm hover:bg-gold/10 transition-colors inline-block">
               Shop Now
             </Link>
           </Magnetic>
