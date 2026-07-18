@@ -19,7 +19,7 @@ let snapshot = { items: cartItems, isOpen: isCartOpen };
 
 const emitChange = () => {
   snapshot = { items: cartItems, isOpen: isCartOpen };
-  for (let listener of listeners) {
+  for (const listener of listeners) {
     listener();
   }
 };

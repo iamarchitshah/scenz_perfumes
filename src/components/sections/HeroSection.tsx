@@ -4,13 +4,26 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Magnetic from "@/components/Magnetic";
+import Link from "next/link";
 
 export default function HeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [mounted, setMounted] = useState(false);
 
+  type Particle = { x: number; y: number; opacity: number; animateY: number; duration: number; };
+  const [particles, setParticles] = useState<Particle[]>([]);
+
   useEffect(() => {
-    setMounted(true);
+    setTimeout(() => {
+      setMounted(true);
+      setParticles(Array.from({ length: 20 }).map(() => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        opacity: Math.random(),
+        animateY: Math.random() * -200,
+        duration: Math.random() * 5 + 5
+      })));
+    }, 0);
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
         x: (e.clientX / window.innerWidth) * 2 - 1,
@@ -96,14 +109,14 @@ export default function HeroSection() {
           className="flex flex-col sm:flex-row gap-6 mt-12"
         >
           <Magnetic>
-            <button className="px-10 py-4 bg-gold text-background rounded-full font-medium tracking-widest uppercase text-sm hover:scale-105 transition-transform">
+            <Link href="#featured" className="px-10 py-4 bg-gold text-background rounded-full font-medium tracking-widest uppercase text-sm hover:scale-105 transition-transform inline-block">
               Discover Collection
-            </button>
+            </Link>
           </Magnetic>
           <Magnetic>
-            <button className="px-10 py-4 border border-gold/50 text-gold rounded-full font-medium tracking-widest uppercase text-sm hover:bg-gold/10 transition-colors">
+            <Link href="/product" className="px-10 py-4 border border-gold/50 text-gold rounded-full font-medium tracking-widest uppercase text-sm hover:bg-gold/10 transition-colors inline-block">
               Shop Now
-            </button>
+            </Link>
           </Magnetic>
         </motion.div>
         
@@ -111,21 +124,21 @@ export default function HeroSection() {
       </div>
 
       {/* Floating Particles - Render only on client to avoid hydration mismatch */}
-      {mounted && [...Array(20)].map((_, i) => (
+      {mounted && particles.map((p, i) => (
         <motion.div
           key={i}
           className="absolute w-1 h-1 bg-gold rounded-full mix-blend-screen"
           initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
-            opacity: Math.random(),
+            x: p.x,
+            y: p.y,
+            opacity: p.opacity,
           }}
           animate={{
-            y: [null, Math.random() * -200],
+            y: [null, p.animateY],
             opacity: [null, 0.8, 0],
           }}
           transition={{
-            duration: Math.random() * 5 + 5,
+            duration: p.duration,
             repeat: Infinity,
             ease: "linear",
           }}

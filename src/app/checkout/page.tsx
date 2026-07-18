@@ -6,6 +6,7 @@ import PageLoader from "@/components/PageLoader";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { useCart } from "@/lib/cart";
 
 export default function Checkout() {
   const router = useRouter();
@@ -13,6 +14,9 @@ export default function Checkout() {
   const [success, setSuccess] = useState(false);
   const [method, setMethod] = useState("COD");
   const [formData, setFormData] = useState({ firstName: "", lastName: "", email: "" });
+  
+  const { items } = useCart();
+  const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +33,7 @@ export default function Checkout() {
     const { error } = await supabase.from('orders').insert([{
       customer_name: `${formData.firstName} ${formData.lastName}`.trim() || user?.user_metadata?.full_name || "Guest Customer",
       customer_email: formData.email || user?.email || "guest@example.com",
-      amount: 1000,
+      amount: subtotal,
       payment_method: method,
       status: "Pending",
       user_id: user?.id || null
@@ -109,25 +113,24 @@ export default function Checkout() {
             <div className="glass-card p-8 rounded-2xl sticky top-32">
               <h2 className="text-xl font-heading mb-6 tracking-widest uppercase">Order Summary</h2>
               <div className="space-y-6 mb-6">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h4 className="font-heading">Scenz Bloom</h4>
-                    <p className="text-xs text-muted-foreground uppercase tracking-widest">Qty: 1</p>
-                  </div>
-                  <span className="text-sm">₹450</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h4 className="font-heading">Attraction</h4>
-                    <p className="text-xs text-muted-foreground uppercase tracking-widest">Qty: 1</p>
-                  </div>
-                  <span className="text-sm">₹550</span>
-                </div>
+                {items.length === 0 ? (
+                  <p className="text-muted-foreground text-sm uppercase tracking-widest text-center py-4">Your bag is empty</p>
+                ) : (
+                  items.map(item => (
+                    <div key={item.id} className="flex justify-between items-center">
+                      <div>
+                        <h4 className="font-heading">{item.name}</h4>
+                        <p className="text-xs text-muted-foreground uppercase tracking-widest">Qty: {item.quantity}</p>
+                      </div>
+                      <span className="text-sm">₹{item.price * item.quantity}</span>
+                    </div>
+                  ))
+                )}
               </div>
               <div className="border-t border-white/10 pt-6 space-y-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span>₹1,000</span>
+                  <span>₹{subtotal}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Shipping</span>
@@ -135,7 +138,7 @@ export default function Checkout() {
                 </div>
                 <div className="flex justify-between text-lg font-heading text-gold mt-4 pt-4 border-t border-white/10">
                   <span>Total</span>
-                  <span>₹1,000</span>
+                  <span>₹{subtotal}</span>
                 </div>
               </div>
             </div>

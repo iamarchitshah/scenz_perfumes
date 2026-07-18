@@ -6,6 +6,7 @@ import Magnetic from "@/components/Magnetic";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { CartStore } from "@/lib/cart";
+import Link from "next/link";
 
 type Product = { id: number; name: string; price: number; image: string; tag: string };
 
@@ -20,7 +21,7 @@ export default function FeaturedCollection() {
     fetchFeatured();
   }, []);
   return (
-    <section className="py-32 bg-background relative z-10 px-6 md:px-12">
+    <section id="featured" className="py-32 bg-background relative z-10 px-6 md:px-12">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -36,9 +37,9 @@ export default function FeaturedCollection() {
             </p>
           </div>
           <Magnetic>
-            <button className="text-sm border-b border-gold text-gold pb-1 tracking-widest uppercase hover:text-white hover:border-white transition-colors">
+            <Link href="/product" className="text-sm border-b border-gold text-gold pb-1 tracking-widest uppercase hover:text-white hover:border-white transition-colors">
               View All Products
-            </button>
+            </Link>
           </Magnetic>
         </motion.div>
 

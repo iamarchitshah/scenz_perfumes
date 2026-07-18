@@ -47,7 +47,7 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    setMobileMenuOpen(false);
+    setTimeout(() => setMobileMenuOpen(false), 0);
   }, [pathname]);
 
   return (
