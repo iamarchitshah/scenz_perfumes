@@ -15,7 +15,7 @@ export default function BrandStory() {
   const y2 = useTransform(scrollYProgress, [0, 1], [0, 200]);
 
   return (
-    <section ref={containerRef} className="py-32 relative overflow-hidden bg-[#0a0a0a]">
+    <section ref={containerRef} className="pt-32 pb-56 relative overflow-hidden bg-[#0a0a0a]">
       {/* Background text */}
       <h2 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20vw] font-heading font-black text-white/[0.02] whitespace-nowrap pointer-events-none select-none">
         HERITAGE

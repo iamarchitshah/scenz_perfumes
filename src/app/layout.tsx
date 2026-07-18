@@ -40,9 +40,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${cormorant.variable} ${poppins.variable} ${inter.variable} h-full antialiased dark`}
+      className={`${playfair.variable} ${cormorant.variable} ${poppins.variable} ${inter.variable} antialiased dark`}
     >
-      <body className="min-h-full flex flex-col font-sans">
+      <body className="flex flex-col font-sans">
         <SmoothScroll>
           <AuthWrapper>
             <CustomCursor />
