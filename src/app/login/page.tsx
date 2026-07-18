@@ -98,7 +98,7 @@ export default function LoginPage() {
               )}
               <div>
                 <label className="text-xs uppercase tracking-widest text-muted-foreground mb-3 block">Email</label>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder={isAdmin ? "Enter admin ID" : "Email Address"} className="w-full bg-transparent border-b border-white/20 pb-3 outline-none focus:border-gold transition-colors text-white" />
+                <input type={isAdmin ? "text" : "email"} value={email} onChange={e => setEmail(e.target.value)} required placeholder={isAdmin ? "Enter admin ID" : "Email Address"} className="w-full bg-transparent border-b border-white/20 pb-3 outline-none focus:border-gold transition-colors text-white" />
               </div>
               <div>
                 <label className="text-xs uppercase tracking-widest text-muted-foreground mb-3 block">Password</label>
