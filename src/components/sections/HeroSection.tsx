@@ -22,7 +22,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-background flex items-center justify-center">
+    <section className="relative min-h-screen w-full overflow-hidden bg-background flex flex-col">
       {/* Background with luxury gradient */}
       <div className="absolute inset-0 luxury-gradient opacity-60" />
       
@@ -41,7 +41,8 @@ export default function HeroSection() {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full max-w-7xl mx-auto pt-20">
+      <div className="flex-1 w-full flex items-center justify-center">
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full max-w-7xl mx-auto pt-20 pb-12">
         {/* Floating Product Image */}
         <motion.div
           initial={{ opacity: 0, y: 100, scale: 0.9 }}
@@ -105,6 +106,8 @@ export default function HeroSection() {
             </button>
           </Magnetic>
         </motion.div>
+        
+        </div>
       </div>
 
       {/* Floating Particles - Render only on client to avoid hydration mismatch */}
@@ -130,19 +133,21 @@ export default function HeroSection() {
       ))}
 
       {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
-        <span className="text-[10px] uppercase tracking-widest text-gold">Scroll</span>
+      <div className="relative z-10 pb-10 w-full flex justify-center mt-auto">
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-[1px] h-12 bg-gradient-to-b from-gold to-transparent"
-        />
-      </motion.div>
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+          className="flex flex-col items-center gap-2"
+        >
+          <span className="text-[10px] uppercase tracking-widest text-gold text-center">Scroll</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="w-[1px] h-12 bg-gradient-to-b from-gold to-transparent"
+          />
+        </motion.div>
+      </div>
     </section>
   );
 }
